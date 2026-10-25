@@ -4,6 +4,8 @@
 ;; because `tests/` is a collection shared by every family package: rivet
 ;; already ships `tests/documentation`, and two packages claiming the same
 ;; module path cannot coexist in one installation (raco pkg install conflict).
+;; The keel- prefix is mandatory for every module in this directory;
+;; tests/keel-collection-names.rkt enforces the rule.
 
 (require rackunit
          racket/file

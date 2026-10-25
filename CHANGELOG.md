@@ -11,6 +11,12 @@ separately by the compatibility rules in `docs/contract-v1.md`.
   change routing, release sequencing, and independent trust domains.
 - Add a documentation gate for local links, the five repository names, and
   every Keel maintainer entry point to the canonical architecture.
+- Close out the `tests/documentation` module-path collision with rivet
+  v0.11.0: the colliding module was renamed to `tests/keel-documentation`
+  on main (never present in any tagged release), every remaining `tests/`
+  module is renamed to a `keel-`-prefixed name, and a collection-name guard
+  keeps the top-level `tests` collection — shared by every installed
+  package — free of unprefixed Keel module paths.
 
 ## 0.3.1 - 2026-10-12
 

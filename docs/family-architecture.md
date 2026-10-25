@@ -122,6 +122,12 @@ family packages; release builds pin the exact versions they ship. A red
 upstream, consumer, or family-compatibility run stops new feature work until it
 is fixed forward or the upstream release is corrected.
 
+The top-level `tests/` collection is shared by every package in one Racket
+installation: two packages claiming the same module path there cannot
+coinstall. Each family package namespaces its test modules with its own
+prefix (`keel-` here, enforced by Keel's collection-name guard) so any set of
+family packages always installs together.
+
 The active implementation queue remains local to each repository:
 
 - Keel wire semantics: `docs/contract-v1.md`
