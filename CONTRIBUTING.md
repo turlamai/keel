@@ -42,17 +42,29 @@ in Keel to reduce the number of downstream edits.
 
 ## Releasing
 
+The package's **official catalog source** is an external record, not the
+repository URL in README. Follow the
+[package catalog release gate](docs/package-catalog-release.md) and correct
+the published `keel` source before triggering Rivet/Glaze consumer tests.
+Until the source is fixed, a fresh Rivet install is blocked regardless of Keel
+unit-test results (issue #8). Do not vendor or bypass the published dependency.
+
 1. Bump the package version in `info.rkt` and add the matching
    `CHANGELOG.md` section in the same change.
 2. Tag the release with an annotated tag.
-3. Trigger the downstream compatibility suites the same day so contract
+3. Manually run the `Package catalog release gate` GitHub Actions workflow.
+   Confirm it resolves the official catalog to the renamed owner and installs
+   `keel` by **package name** on a clean Racket runner. A failed or queued
+   gate is NOT release approval.
+4. Trigger the downstream compatibility suites the same day so contract
    changes are validated against consumers immediately instead of at their
    next update:
 
        gh workflow run family-compat.yml -R turlamai/rivet
        gh workflow run family-compat.yml -R turlamai/glaze
 
-4. Watch both runs; a red downstream run outranks new work. Record the two
+5. Watch both runs; a red downstream run outranks new work. Record the catalog
+   gate run and the two downstream
    workflow run URLs, tested Keel commit and consumer commit SHAs in the
    release handoff. An untriggered or queued compatibility job is not green.
 
