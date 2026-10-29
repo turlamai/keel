@@ -64,6 +64,16 @@
 (check-false
  (string-contains? agent-guide "turinglambdaai/")
  "maintainer agent instructions must not dispatch retired GitHub owners")
+(for ([entry '("README.md" "README.zh-CN.md" "CONTRIBUTING.md" "AGENTS.md")])
+  (check-true
+   (string-contains?
+    (file->string (build-path repository-root entry))
+    "docs/package-catalog-release.md")
+   (format "~a must link the published catalog release gate" entry)))
+(check-true
+ (file-exists?
+  (build-path repository-root ".github/workflows/catalog-release-gate.yml"))
+ "release verification must ship a manually triggered catalog install gate")
 (for ([guide (in-list (list agent-guide contributor-guide))])
   (check-true
    (string-contains? guide "docs/package-catalog-release.md")
