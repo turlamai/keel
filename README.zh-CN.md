@@ -70,12 +70,13 @@ Rivet 可以把一条命令映射为 RVT1 RPC，而 Glaze 将其映射为 GLZ1 i
 
 ## 官方包目录安装状态
 
-仓库改名后，即使源码地址能访问，Racket 官方包目录也可能仍然指向旧账号，
-导致 `raco pkg install keel` 或 Rivet/Glaze 的依赖安装失败。
-请核对[官方包目录发布门禁](docs/package-catalog-release.md)及
-[阻塞 Issue #8](https://github.com/turlamai/keel/issues/8)；
-必须独立验证官方包名安装和下游兼容性，不能通过直接检出 GitHub 仓库
-冒充已验证的包目录依赖。
+**2026-10-29 官方包目录已经修复**：
+[Keel 官方记录](https://pkgs.racket-lang.org/package/keel)
+现指向 `https://github.com/turlamai/keel.git#main`，Racket 9.3
+官方构建与 **2,361 项测试均通过**。
+[包目录验收门禁](docs/package-catalog-release.md)继续防止再次失效；
+[Issue #8](https://github.com/turlamai/keel/issues/8)
+尚须记录 Rivet/Glaze 下游环境复验结果，而不是要求再次修改包目录。
 
 ## 开发
 
