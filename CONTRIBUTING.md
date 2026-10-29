@@ -49,10 +49,12 @@ in Keel to reduce the number of downstream edits.
    changes are validated against consumers immediately instead of at their
    next update:
 
-       gh workflow run family-compat.yml -R turinglambdaai/rivet
-       gh workflow run family-compat.yml -R turinglambdaai/glaze
+       gh workflow run family-compat.yml -R turlamai/rivet
+       gh workflow run family-compat.yml -R turlamai/glaze
 
-4. Watch both runs; a red downstream run outranks new work.
+4. Watch both runs; a red downstream run outranks new work. Record the two
+   workflow run URLs, tested Keel commit and consumer commit SHAs in the
+   release handoff. An untriggered or queued compatibility job is not green.
 
 By participating, contributors agree to be respectful, technically specific,
 and welcoming. Maintainers may moderate conduct that makes collaboration unsafe
@@ -60,4 +62,4 @@ or hostile.
 
 ## Documentation languages
 
-Use English for default public docs and preserve complete Chinese README and onboarding paths. Keep examples, supported-platform limits, troubleshooting and privacy/security promises consistent in the same change. Preserve identifiers and copyable commands; technical protocols have one normative English source, not separate language implementations. See the [family documentation language policy](https://github.com/turinglambdaai/turinglambdaai.github.io/blob/master/docs/DOCUMENTATION-LANGUAGES.md) for scope and review checks.
+Use English for default public docs and preserve complete Chinese README and onboarding paths. Keep examples, supported-platform limits, troubleshooting and privacy/security promises consistent in the same change. Preserve identifiers and copyable commands; technical protocols have one normative English source, not separate language implementations. See the [family documentation language policy](https://github.com/turlamai/turlamai.github.io/blob/master/docs/DOCUMENTATION-LANGUAGES.md) for scope and review checks.
