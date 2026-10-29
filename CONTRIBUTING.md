@@ -42,12 +42,12 @@ in Keel to reduce the number of downstream edits.
 
 ## Releasing
 
-The package's **official catalog source** is an external record, not the
-repository URL in README. Follow the
-[package catalog release gate](docs/package-catalog-release.md) and correct
-the published `keel` source before triggering Rivet/Glaze consumer tests.
-Until the source is fixed, a fresh Rivet install is blocked regardless of Keel
-unit-test results (issue #8). Do not vendor or bypass the published dependency.
+The official package record was corrected on 2026-10-29 and its
+Racket 9.3 build/test transcript reports 2,361 successful tests.
+See [the catalog release gate](docs/package-catalog-release.md) for
+fresh by-name install checks. [Issue #8](https://github.com/turlamai/keel/issues/8)
+tracks rerunning previously blocked Rivet/Glaze consumer suites.
+Do not vendor or bypass published Keel dependencies.
 
 1. Bump the package version in `info.rkt` and add the matching
    `CHANGELOG.md` section in the same change.
