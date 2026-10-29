@@ -50,6 +50,16 @@
                (find-relative-path repository-root document)
                target)))))
 
+;; Downstream workflow dispatch must use the current GitHub owner.
+(define contributor-guide
+  (file->string (build-path repository-root "CONTRIBUTING.md")))
+(for ([owner '("turlamai/rivet" "turlamai/glaze")])
+  (check-true (string-contains? contributor-guide owner)
+              (format "downstream release handoff must reference ~a" owner)))
+(check-false
+ (string-contains? contributor-guide "turinglambdaai/")
+ "contributing guide must not retain retired GitHub organization paths")
+
 (define family-document-relative "docs/family-architecture.md")
 (define family-document
   (file->string (build-path repository-root family-document-relative)))
