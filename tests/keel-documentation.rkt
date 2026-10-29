@@ -59,6 +59,15 @@
 (check-false
  (string-contains? contributor-guide "turinglambdaai/")
  "contributing guide must not retain retired GitHub organization paths")
+(define agent-guide
+  (file->string (build-path repository-root "AGENTS.md")))
+(check-false
+ (string-contains? agent-guide "turinglambdaai/")
+ "maintainer agent instructions must not dispatch retired GitHub owners")
+(for ([guide (in-list (list agent-guide contributor-guide))])
+  (check-true
+   (string-contains? guide "docs/package-catalog-release.md")
+   "release/agent guidance must link the official catalog gate"))
 
 (define family-document-relative "docs/family-architecture.md")
 (define family-document
