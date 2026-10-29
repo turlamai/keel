@@ -57,12 +57,12 @@ gh workflow run family-compat.yml -R turlamai/rivet
 gh workflow run family-compat.yml -R turlamai/glaze
 ```
 
-Before the downstream run, verify the **published Racket package catalog**
-resolves `keel` to `https://github.com/turlamai/keel.git`, not the retired
-`turinglambdaai` source. Use the on-demand
-[package catalog release gate](docs/package-catalog-release.md). Issue #8 is
-a publishing blocker: linking Keel locally does not verify its consumers
-can install a catalog dependency.
+The [official Racket package catalog](https://pkgs.racket-lang.org/package/keel)
+was corrected to `https://github.com/turlamai/keel.git#main` on
+2026-10-29 and the package builder passed 2,361 Racket 9.3 tests.
+Continue enforcing the [catalog release gate](docs/package-catalog-release.md);
+issue #8 now awaits previously blocked Rivet/Glaze consumer evidence.
+A green Keel package build does not prove all downstream releases.
 
 A red downstream run outranks new work: fix forward with a patch release or
 coordinate a floor bump, and keep `main` green on both sides.
