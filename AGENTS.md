@@ -53,9 +53,16 @@ trigger the downstream compatibility suites the same day so contract changes
 are validated against consumers immediately instead of at their next update:
 
 ```bash
-gh workflow run family-compat.yml -R turinglambdaai/rivet
-gh workflow run family-compat.yml -R turinglambdaai/glaze
+gh workflow run family-compat.yml -R turlamai/rivet
+gh workflow run family-compat.yml -R turlamai/glaze
 ```
+
+Before the downstream run, verify the **published Racket package catalog**
+resolves `keel` to `https://github.com/turlamai/keel.git`, not the retired
+`turinglambdaai` source. Use the on-demand
+[package catalog release gate](docs/package-catalog-release.md). Issue #8 is
+a publishing blocker: linking Keel locally does not verify its consumers
+can install a catalog dependency.
 
 A red downstream run outranks new work: fix forward with a patch release or
 coordinate a floor bump, and keep `main` green on both sides.
