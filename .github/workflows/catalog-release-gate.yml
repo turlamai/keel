@@ -1,0 +1,51 @@
+name: Published package catalog release gate
+
+# Deliberately manual: the official Racket package catalog is external,
+# maintainer-controlled state. Do not hide its failures in PR unit CI.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  clean-catalog-install:
+    name: Catalog source and fresh Racket 9.3 install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: Bogdanp/setup-racket@2466913449df77df2bad149d1f2fc4e1ea4795dd # v1.15
+        with:
+          architecture: x64
+          distribution: full
+          variant: CS
+          version: "9.3"
+      - name: Check published catalog source (not a Git checkout override)
+        shell: bash
+        run: |
+          set -euo pipefail
+          raco pkg catalog-show --catalog https://pkgs.racket-lang.org keel | tee catalog-output.txt
+          if grep -Fq 'github.com/turinglambdaai/keel' catalog-output.txt; then
+            echo "::error::Published keel catalog source is retired. Update the official package metadata before release. See issue #8."
+            exit 1
+          fi
+          if ! grep -Fq 'https://github.com/turlamai/keel.git' catalog-output.txt; then
+            echo "::error::Published keel catalog source does not identify the canonical turlamai/keel.git repository."
+            exit 1
+          fi
+      - name: Install Keel by official package name in a fresh runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          raco pkg install --auto --no-docs keel
+          raco pkg show --all --long keel
+          raco test -p keel
+      - name: Release evidence summary
+        shell: bash
+        run: |
+          {
+            echo '## Keel official catalog release gate'
+            echo 'Source: https://pkgs.racket-lang.org/package/keel'
+            echo 'A successful job proves the published catalog source resolved and a clean Racket 9.3 by-name installation/test passed.'
+            echo 'It does not prove Rivet/Glaze downstream compatibility, which must be run separately.'
+          } >> "$GITHUB_STEP_SUMMARY"
