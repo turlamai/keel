@@ -6,6 +6,12 @@ separately by the compatibility rules in `docs/contract-v1.md`.
 
 ## Unreleased
 
+- Add an on-demand official Racket package catalog release gate that verifies
+  `keel` resolves to the renamed GitHub source and installs by catalog package
+  name from a fresh Racket 9.3 runner, before attempting downstream
+  Rivet/Glaze compatibility. Document the maintainer-only published metadata
+  repair and enforce current AGENTS.md dispatch targets.
+
 - Repair downstream Rivet/Glaze compatibility workflow commands after the
   GitHub owner rename; require run URLs and exact SHAs in release handoff,
   and protect canonical downstream identities with a documentation test.
