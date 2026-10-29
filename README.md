@@ -91,6 +91,16 @@ cross-runtime golden vectors, decoder budget tests, and a version decision.
 Transport protocols may embed this codec, but they must negotiate their own
 versions and error taxonomies.
 
+## Published package install status
+
+The official Racket package catalogue can still reference the retired GitHub
+owner after a repository rename, even if direct source installs work. Before
+relying on `raco pkg install keel` from the catalogue, check the
+[package-catalog release gate](docs/package-catalog-release.md) and
+[blocker #8](https://github.com/turlamai/keel/issues/8). The by-name install
+and Rivet/Glaze downstream suites must pass independently of Keel's local
+tests. Do not substitute an unreviewed Git checkout for a published package.
+
 ## Development
 
 ```sh
