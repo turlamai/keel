@@ -4,7 +4,7 @@
 (define collection 'multi)
 (define version "0.3.1")
 (define pkg-desc "Transport-neutral application contracts for Racket desktop runtimes")
-(define pkg-authors '(turinglambdaai))
+(define pkg-authors '(turlamai))
 (define license 'MIT)
 
 (define deps '(["base" #:version "9.0"]))
