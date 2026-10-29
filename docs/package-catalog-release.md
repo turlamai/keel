@@ -1,58 +1,47 @@
 # Official Racket package catalog release gate
 
-**Current blocker: [Keel issue #8](https://github.com/turlamai/keel/issues/8).**
-The official `keel` catalog metadata still points at the old GitHub
-owner `turinglambdaai`, which can break a fresh `raco pkg install` in
-Rivet/Glaze before any application tests execute. A correct GitHub README
-or URL redirect does **not** change the separately published catalog
-record. No local worktree or CI green badge can substitute for that
-external correction.
+**Catalog source correction verified (2026-10-29):** the
+[official Keel package record](https://pkgs.racket-lang.org/package/keel)
+now resolves to `https://github.com/turlamai/keel.git#main`.
+The [Racket 9.3 official package-build transcript](https://pkg-build.racket-lang.org/server/built/test-success/keel.txt)
+records successful by-name installation and **2,361 passing tests**
+against commit `72353dbf87adca36816224438d2dac5e19427c2e`.
 
-## Maintainer-only catalog repair
+The former package-source problem has been fixed. [Issue #8](https://github.com/turlamai/keel/issues/8)
+now tracks rerunning the *previously blocked* Rivet/Glaze consumer suites.
+A green Keel package build does not establish all downstream compatibility.
 
-1. Open the [official package record](https://pkgs.racket-lang.org/package/keel),
-   sign in with the account which manages the **existing** `keel` package
-   and edit its source to `https://github.com/turlamai/keel.git#main`
-   (preserve the package name `keel`, license, version metadata and
-   published dependency identity). Do not create a shadow package.
-2. Wait for the published record to reflect the canonical source;
-   record the change and the actual source shown in the catalogue.
-   An HTML/REST GitHub redirect is not equivalent to a fresh package
-   manager install. No signer secrets or admin credentials belong in Git.
-3. Inspect the catalog on a clean Racket installation:
+## Catalog revalidation and future maintenance
+
+1. Inspect the current published source with a fresh Racket install:
 
    ```sh
    raco pkg catalog-show --catalog https://pkgs.racket-lang.org keel
    ```
 
-   Confirm it displays `https://github.com/turlamai/keel.git#main`,
-   not `https://github.com/turinglambdaai/keel.git#main`.
-4. Run [Published package catalog release gate](../.github/workflows/catalog-release-gate.yml)
-   **manually** in GitHub Actions. This deliberately fails if the official
-   catalog is stale; it installs `keel` **by package name** in a fresh
-   Racket 9.3 environment and runs the package tests.
-5. Re-run `turlamai/rivet` and `turlamai/glaze`
-   `family-compat.yml` and the affected Rivet packaging jobs; verify
-   published `keel` still satisfies the Rivet version floor. Save exact
-   run URLs and both consumer SHAs as release evidence.
-6. Close [#8](https://github.com/turlamai/keel/issues/8) only after
-   actual fresh catalog installation and the previously blocked downstream
-   suite pass. Do not “fix” the consumer by vendoring Keel or switching
-   its dependency to a direct Git checkout.
+   Confirm `https://github.com/turlamai/keel.git#main`. If a future
+   migration requires correction, the authorized package catalog maintainer
+   must edit the **existing** `keel` source record; GitHub redirects and
+   repository README edits do not update official catalog metadata.
+2. Run [Published package catalog release gate](../.github/workflows/catalog-release-gate.yml)
+   manually after it reaches the default branch. This checks the official
+   source and installs/tests `keel` by name on a clean Racket 9.3 runner.
+3. Rerun `turlamai/rivet` and `turlamai/glaze` `family-compat.yml` and
+   any affected packaging CI; verify the published Keel version still
+   satisfies the consumers' declared minimum version. Record exact run
+   URLs and consumer SHAs.
+4. Close [#8](https://github.com/turlamai/keel/issues/8) only after
+   the previously blocked suites complete successfully. Do not vendor
+   Keel or replace its published catalog dependency with a direct Git clone.
 
-## Failure semantics and scope
+## Failure semantics
 
-- Catalog unavailable: **NO-GO** (not proof of a valid source).
-- Published source is the retired owner: **NO-GO**.
-- Published source is correct but clean install or tests fail: **NO-GO**;
-  inspect the Racket package output and fix the actual dependency.
-- Local linked-package tests succeed: useful development evidence, but
-  not catalog verification.
-- The manual workflow does not auto-publish metadata, perform downloads
-  on developer machines, or trigger consumer workflows; the catalog
-  owner must perform the external edit and collect the downstream evidence.
+- Catalog unavailable or old owner reappears: **NO-GO**.
+- Catalog correct but fresh install/test fails: **NO-GO**, investigate.
+- Official Keel build passes but downstream jobs remain queued: **Keel
+  package gate passed, downstream gate unverified**; not an all-green release.
+- Local linked-package tests alone are not official catalog evidence.
 
-See [the Racket package command documentation](https://docs.racket-lang.org/pkg/cmdline.html)
-for `raco pkg catalog-show` and the
-[package catalog protocol](https://docs.racket-lang.org/pkg/catalog-protocol.html)
-for the distinction between source metadata and a Git checkout.
+The manual gate never edits official metadata or dispatches downstream CI.
+See [Racket package commands](https://docs.racket-lang.org/pkg/cmdline.html)
+for `raco pkg catalog-show`.
