@@ -42,17 +42,31 @@ in Keel to reduce the number of downstream edits.
 
 ## Releasing
 
+The official package record was corrected on 2026-10-29 and its
+Racket 9.3 build/test transcript reports 2,361 successful tests.
+See [the catalog release gate](docs/package-catalog-release.md) for
+fresh by-name install checks. [Issue #8](https://github.com/turlamai/keel/issues/8)
+tracks rerunning previously blocked Rivet/Glaze consumer suites.
+Do not vendor or bypass published Keel dependencies.
+
 1. Bump the package version in `info.rkt` and add the matching
    `CHANGELOG.md` section in the same change.
 2. Tag the release with an annotated tag.
-3. Trigger the downstream compatibility suites the same day so contract
+3. Manually run the `Package catalog release gate` GitHub Actions workflow.
+   Confirm it resolves the official catalog to the renamed owner and installs
+   `keel` by **package name** on a clean Racket runner. A failed or queued
+   gate is NOT release approval.
+4. Trigger the downstream compatibility suites the same day so contract
    changes are validated against consumers immediately instead of at their
    next update:
 
-       gh workflow run family-compat.yml -R turinglambdaai/rivet
-       gh workflow run family-compat.yml -R turinglambdaai/glaze
+       gh workflow run family-compat.yml -R turlamai/rivet
+       gh workflow run family-compat.yml -R turlamai/glaze
 
-4. Watch both runs; a red downstream run outranks new work.
+5. Watch both runs; a red downstream run outranks new work. Record the catalog
+   gate run and the two downstream
+   workflow run URLs, tested Keel commit and consumer commit SHAs in the
+   release handoff. An untriggered or queued compatibility job is not green.
 
 By participating, contributors agree to be respectful, technically specific,
 and welcoming. Maintainers may moderate conduct that makes collaboration unsafe
@@ -60,4 +74,4 @@ or hostile.
 
 ## Documentation languages
 
-Use English for default public docs and preserve complete Chinese README and onboarding paths. Keep examples, supported-platform limits, troubleshooting and privacy/security promises consistent in the same change. Preserve identifiers and copyable commands; technical protocols have one normative English source, not separate language implementations. See the [family documentation language policy](https://github.com/turinglambdaai/turinglambdaai.github.io/blob/master/docs/DOCUMENTATION-LANGUAGES.md) for scope and review checks.
+Use English for default public docs and preserve complete Chinese README and onboarding paths. Keep examples, supported-platform limits, troubleshooting and privacy/security promises consistent in the same change. Preserve identifiers and copyable commands; technical protocols have one normative English source, not separate language implementations. See the [family documentation language policy](https://github.com/turlamai/turlamai.github.io/blob/master/docs/DOCUMENTATION-LANGUAGES.md) for scope and review checks.

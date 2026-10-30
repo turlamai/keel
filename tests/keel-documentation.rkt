@@ -50,6 +50,35 @@
                (find-relative-path repository-root document)
                target)))))
 
+;; Downstream workflow dispatch must use the current GitHub owner.
+(define contributor-guide
+  (file->string (build-path repository-root "CONTRIBUTING.md")))
+(for ([owner '("turlamai/rivet" "turlamai/glaze")])
+  (check-true (string-contains? contributor-guide owner)
+              (format "downstream release handoff must reference ~a" owner)))
+(check-false
+ (string-contains? contributor-guide "turinglambdaai/")
+ "contributing guide must not retain retired GitHub organization paths")
+(define agent-guide
+  (file->string (build-path repository-root "AGENTS.md")))
+(check-false
+ (string-contains? agent-guide "turinglambdaai/")
+ "maintainer agent instructions must not dispatch retired GitHub owners")
+(for ([entry '("README.md" "README.zh-CN.md" "CONTRIBUTING.md" "AGENTS.md")])
+  (check-true
+   (string-contains?
+    (file->string (build-path repository-root entry))
+    "docs/package-catalog-release.md")
+   (format "~a must link the published catalog release gate" entry)))
+(check-true
+ (file-exists?
+  (build-path repository-root ".github/workflows/catalog-release-gate.yml"))
+ "release verification must ship a manually triggered catalog install gate")
+(for ([guide (in-list (list agent-guide contributor-guide))])
+  (check-true
+   (string-contains? guide "docs/package-catalog-release.md")
+   "release/agent guidance must link the official catalog gate"))
+
 (define family-document-relative "docs/family-architecture.md")
 (define family-document
   (file->string (build-path repository-root family-document-relative)))

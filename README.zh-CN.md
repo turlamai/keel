@@ -68,6 +68,16 @@ Rivet 可以把一条命令映射为 RVT1 RPC，而 Glaze 将其映射为 GLZ1 i
 
 `tests/golden-v1.txt` 是规范性字节语料库。修改既有任何一行都构成兼容性破坏。新增联合成员需要书面理由、新的跨运行时 golden 向量、解码器预算测试，以及一次版本决策。传输协议可以嵌入此编解码器，但必须自行协商各自的版本与错误分类法。
 
+## 官方包目录安装状态
+
+**2026-10-29 官方包目录已经修复**：
+[Keel 官方记录](https://pkgs.racket-lang.org/package/keel)
+现指向 `https://github.com/turlamai/keel.git#main`，Racket 9.3
+官方构建与 **2,361 项测试均通过**。
+[包目录验收门禁](docs/package-catalog-release.md)继续防止再次失效；
+[Issue #8](https://github.com/turlamai/keel/issues/8)
+尚须记录 Rivet/Glaze 下游环境复验结果，而不是要求再次修改包目录。
+
 ## 开发
 
 ```sh

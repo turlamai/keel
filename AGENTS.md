@@ -53,9 +53,16 @@ trigger the downstream compatibility suites the same day so contract changes
 are validated against consumers immediately instead of at their next update:
 
 ```bash
-gh workflow run family-compat.yml -R turinglambdaai/rivet
-gh workflow run family-compat.yml -R turinglambdaai/glaze
+gh workflow run family-compat.yml -R turlamai/rivet
+gh workflow run family-compat.yml -R turlamai/glaze
 ```
+
+The [official Racket package catalog](https://pkgs.racket-lang.org/package/keel)
+was corrected to `https://github.com/turlamai/keel.git#main` on
+2026-10-29 and the package builder passed 2,361 Racket 9.3 tests.
+Continue enforcing the [catalog release gate](docs/package-catalog-release.md);
+issue #8 now awaits previously blocked Rivet/Glaze consumer evidence.
+A green Keel package build does not prove all downstream releases.
 
 A red downstream run outranks new work: fix forward with a patch release or
 coordinate a floor bump, and keep `main` green on both sides.

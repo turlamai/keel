@@ -91,6 +91,15 @@ cross-runtime golden vectors, decoder budget tests, and a version decision.
 Transport protocols may embed this codec, but they must negotiate their own
 versions and error taxonomies.
 
+## Published package install status
+
+The [official Racket package catalog](https://pkgs.racket-lang.org/package/keel)
+was corrected to `https://github.com/turlamai/keel.git#main` on
+2026-10-29. The official Racket 9.3 builder reports **2,361 passing tests**.
+The [catalog release gate](docs/package-catalog-release.md) guards against
+regressions; [issue #8](https://github.com/turlamai/keel/issues/8)
+tracks the separate Rivet/Glaze downstream rerun evidence.
+
 ## Development
 
 ```sh
