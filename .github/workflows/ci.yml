@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Racket ${{ matrix.racket }} on ${{ matrix.os }}
@@ -30,4 +34,6 @@ jobs:
       - name: Test
         run: raco test -p keel
       - name: Build documentation
+        # Documentation is platform independent; retain Racket 9.0 + 9.3 checks.
+        if: matrix.os == 'ubuntu-latest'
         run: raco setup --doc-index --check-pkg-deps --pkgs keel
