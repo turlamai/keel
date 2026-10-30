@@ -34,4 +34,6 @@ jobs:
       - name: Test
         run: raco test -p keel
       - name: Build documentation
+        # Documentation is platform independent; retain Racket 9.0 + 9.3 checks.
+        if: matrix.os == 'ubuntu-latest'
         run: raco setup --doc-index --check-pkg-deps --pkgs keel
