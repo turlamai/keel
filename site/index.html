@@ -36,7 +36,7 @@ html:lang(en) .reader-zh,html:lang(zh) .reader-en{display:none!important}@media(
         <a href="#contract" data-i18n="nav.contract">Contract</a>
         <a href="#lifecycle" data-i18n="nav.lifecycle">Lifecycle</a>
         <a href="#start" data-i18n="nav.start">Quick start</a>
-        <a href="https://github.com/turinglambdaai/keel">GitHub</a>
+        <a href="https://github.com/turlamai/keel">GitHub</a>
         <button class="text-button" id="lang-button" type="button" aria-label="Switch language">中文</button>
         <button class="theme-button" id="theme-button" type="button" aria-label="Toggle color theme">
           <span class="theme-light" aria-hidden="true">◐</span>
@@ -53,7 +53,7 @@ html:lang(en) .reader-zh,html:lang(zh) .reader-en{display:none!important}@media(
         <p class="lede" data-i18n="hero.lede">Keel is the transport-neutral application contract shared by Racket desktop runtimes: one value model, one canonical encoding, one error shape — so native and WebView apps speak the same bytes.</p>
         <div class="hero-actions">
           <a class="button primary" href="#start" data-i18n="hero.start">Get started</a>
-          <a class="button secondary" href="https://github.com/turinglambdaai/keel/blob/main/docs/contract-v1.md" data-i18n="hero.spec">Read Contract v1</a>
+          <a class="button secondary" href="https://github.com/turlamai/keel/blob/main/docs/contract-v1.md" data-i18n="hero.spec">Read Contract v1</a>
         </div>
         <div class="proof-row" aria-label="Core properties">
           <span><i></i><b data-i18n="proof.neutral">Transport-neutral</b></span>
@@ -169,7 +169,7 @@ html:lang(en) .reader-zh,html:lang(zh) .reader-en{display:none!important}@media(
         <p class="eyebrow" data-i18n="start.eyebrow">RACKET REFERENCE IMPLEMENTATION</p>
         <h2 data-i18n="start.title">From value to bytes.</h2>
         <p data-i18n="start.lede">Install the package, encode a value, get the canonical bytes — the same bytes every conforming runtime produces.</p>
-        <a class="text-link" href="https://github.com/turinglambdaai/keel/blob/main/docs/contract-v1.md" data-i18n="start.spec">Read the normative Contract v1 →</a>
+        <a class="text-link" href="https://github.com/turlamai/keel/blob/main/docs/contract-v1.md" data-i18n="start.spec">Read the normative Contract v1 →</a>
       </div>
       <div class="terminal" aria-label="Keel Racket example">
         <div class="terminal-bar"><i></i><i></i><i></i><span>keel — Racket</span></div>
@@ -203,17 +203,17 @@ html:lang(en) .reader-zh,html:lang(zh) .reader-en{display:none!important}@media(
       </div>
       <p data-i18n="boundary.body">Keel owns no frame header, request identifier, streaming or backpressure, renderer, permission model, or installer. Rivet keeps RVT1 and its native hosts; Glaze keeps GLZ1 and its WebView adapters; other transports may embed this codec but negotiate their own versions and error taxonomies.</p>
     </section>
-  <section id="adoption" class="product-start"><h2 class="reader-en " lang="en">Build one verifiable result.</h2><h2 class="reader-zh " lang="zh">先完成一个可验证的结果。</h2><p class="reader-en " lang="en">Use Keel for transport-neutral values, canonical bytes, schemas and structured errors shared by runtimes. Most product developers should start with Rivet or Glaze rather than assemble a second application framework around Keel.</p><p class="reader-zh " lang="zh">Keel 适用于运行时共享的传输中立值、规范字节、schema 与结构化错误。大多数产品开发者应从 Rivet 或 Glaze 入手，而不是围绕 Keel 再组装一个应用框架。</p><p class="reader-en " lang="en">Racket 9.0+; base-only implementation. There is no GUI, network service, package installer or commercial account in this library. Consumers keep transport envelopes and platform behavior outside Keel.</p><p class="reader-zh " lang="zh">需要 Racket 9.0+，实现仅依赖 base。本库不含 GUI、网络服务、程序安装器或商业账号。使用方在 Keel 之外维护传输信封与平台行为。</p><p class="reader-en " lang="en">Encode then decode a small value, test rejection at your actual input boundary, and run the shared golden corpus for any independent implementation. Do not hand-copy the codec into a product. Package SemVer and wire-contract versions have separate ownership.</p><p class="reader-zh " lang="zh">先对小值编码再解码，在实际输入边界验证拒绝行为，并为独立实现运行共用 golden corpus。不要把编解码器手抄进产品。包 SemVer 与线协议版本各有独立归属。</p><div class="start-links"><a class="reader-en" lang="en" href="https://github.com/turinglambdaai/keel/blob/main/docs/USING.md">Getting started, compatibility &amp; support</a><a class="reader-zh" lang="zh" href="https://github.com/turinglambdaai/keel/blob/main/docs/USING.zh-CN.md">入门、兼容与支持</a></div></section>
+  <section id="adoption" class="product-start"><h2 class="reader-en " lang="en">Build one verifiable result.</h2><h2 class="reader-zh " lang="zh">先完成一个可验证的结果。</h2><p class="reader-en " lang="en">Use Keel for transport-neutral values, canonical bytes, schemas and structured errors shared by runtimes. Most product developers should start with Rivet or Glaze rather than assemble a second application framework around Keel.</p><p class="reader-zh " lang="zh">Keel 适用于运行时共享的传输中立值、规范字节、schema 与结构化错误。大多数产品开发者应从 Rivet 或 Glaze 入手，而不是围绕 Keel 再组装一个应用框架。</p><p class="reader-en " lang="en">Racket 9.0+; base-only implementation. There is no GUI, network service, package installer or commercial account in this library. Consumers keep transport envelopes and platform behavior outside Keel.</p><p class="reader-zh " lang="zh">需要 Racket 9.0+，实现仅依赖 base。本库不含 GUI、网络服务、程序安装器或商业账号。使用方在 Keel 之外维护传输信封与平台行为。</p><p class="reader-en " lang="en">Encode then decode a small value, test rejection at your actual input boundary, and run the shared golden corpus for any independent implementation. Do not hand-copy the codec into a product. Package SemVer and wire-contract versions have separate ownership.</p><p class="reader-zh " lang="zh">先对小值编码再解码，在实际输入边界验证拒绝行为，并为独立实现运行共用 golden corpus。不要把编解码器手抄进产品。包 SemVer 与线协议版本各有独立归属。</p><div class="start-links"><a class="reader-en" lang="en" href="https://github.com/turlamai/keel/blob/main/docs/USING.md">Getting started, compatibility &amp; support</a><a class="reader-zh" lang="zh" href="https://github.com/turlamai/keel/blob/main/docs/USING.zh-CN.md">入门、兼容与支持</a></div></section>
 </main>
 
   <footer>
     <div class="footer-brand"><span class="brand-mark" aria-hidden="true">K</span><b>keel</b></div>
     <p data-i18n="footer.tagline">The shared application contract of the Racket desktop family.</p>
     <div class="footer-links">
-      <a href="https://github.com/turinglambdaai/keel">GitHub</a>
-      <a href="https://github.com/turinglambdaai/keel/blob/main/docs/contract-v1.md">Contract v1</a>
-      <a href="https://github.com/turinglambdaai/keel/blob/main/SECURITY.md">Security</a>
-      <a href="https://github.com/turinglambdaai/keel/blob/main/LICENSE">MIT</a>
+      <a href="https://github.com/turlamai/keel">GitHub</a>
+      <a href="https://github.com/turlamai/keel/blob/main/docs/contract-v1.md">Contract v1</a>
+      <a href="https://github.com/turlamai/keel/blob/main/SECURITY.md">Security</a>
+      <a href="https://github.com/turlamai/keel/blob/main/LICENSE">MIT</a>
     </div>
   </footer>
 
