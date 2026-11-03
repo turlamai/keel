@@ -6,6 +6,10 @@ separately by the compatibility rules in `docs/contract-v1.md`.
 
 ## Unreleased
 
+- Preserve CI evidence for every `main` commit instead of cancelling earlier
+  builds, while continuing to cancel superseded pull request checks; release
+  and downstream compatibility gates remain unchanged.
+
 - Add an on-demand official Racket package catalog release gate that verifies
   `keel` resolves to the renamed GitHub source and installs by catalog package
   name from a fresh Racket 9.3 runner, before attempting downstream
