@@ -56,10 +56,18 @@
        (not (nan? value))
        (not (infinite? value))))
 
+;; `hash?` also accepts eq-based hashes. Two distinct string objects with the
+;; same contents are separate keys in a hasheq, so accepting that hash would let
+;; `encode-app-value` emit duplicate map keys that its own decoder rejects.
+;; Rebuilding an equal?-based hash merges such keys; a count mismatch means the
+;; map is not canonical. Equal?-based hashes skip the rebuild.
 (define (canonical-map? value)
   (and (hash? value)
        (immutable? value)
-       (for/and ([key (in-hash-keys value)]) (string? key))))
+       (for/and ([key (in-hash-keys value)]) (string? key))
+       (or (hash-equal? value)
+           (= (hash-count value)
+              (hash-count (make-immutable-hash (hash->list value)))))))
 
 (define (utf8-key<? left right)
   (bytes<? (string->bytes/utf-8 left)
