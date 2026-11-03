@@ -96,6 +96,36 @@ The scalar descriptors are @racket[Null], @racket[Bool], @racket[Int64],
 @racket[schema-record], @racket[schema-enum], @racket[schema-parameter],
 @racket[schema-command], @racket[schema-event], and @racket[schema-state].
 
+@section{Schema compatibility}
+
+Two schema revisions are comparable without a transport. A change is
+@racket['breaking] when an existing peer can observe a different value, name,
+type, or closed case set, and @racket['compatible] otherwise. Revision numbers
+are not interpreted: callers decide whether a revision replaces, supersedes, or
+accompanies the old one.
+
+@defstruct*[schema-change ([severity (or/c 'breaking 'compatible)]
+                           [path string?]
+                           [detail string?])]{
+One reviewable difference. @racket[path] is a stable dotted location such as
+@racket["records.Order.fields.total"], and @racket[detail] explains the rule
+that fired.}
+
+@defproc[(app-schema-changes [old app-schema?] [new app-schema?])
+         (listof schema-change?)]{
+Returns every difference from @racket[old] to @racket[new], sorted by
+@racket[path]. Breaking rules include removing a record, field, enum, command,
+parameter, event, or state; adding a required record field, a command parameter,
+or a closed enum case; changing any type or command result; adding or removing
+a declared command error code; and changing the schema identity. Compatible
+rules include adding a record, enum, command, event, or state, and adding an
+optional record field.}
+
+@defproc[(schema-compatible? [old app-schema?] [new app-schema?]) boolean?]{
+Returns @racket[#t] when @racket[app-schema-changes] reports no
+@racket['breaking] change, meaning peers built against @racket[old] can keep
+operating against @racket[new] under the documented wire rules.}
+
 @section{Lifecycle}
 
 @defthing[lifecycle-states (listof symbol?)]{The lifecycle vocabulary, in order: @racket['starting], @racket['ready], @racket['running], @racket['stopping], and @racket['stopped].}

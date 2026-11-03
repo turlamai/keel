@@ -96,3 +96,12 @@ Existing tags and golden bytes never change within v1. An additive tag still
 requires protocol negotiation because an older decoder must reject it. Any
 change to numeric representation, canonical ordering, budgets, or structured
 error shape requires a new Keel contract version and migration evidence.
+
+Schema compatibility is separate from wire versioning. `app-schema-changes`
+compares two revisions and classifies each difference as `breaking` or
+`compatible`. Adding a record, enum, command, event, or state is compatible;
+adding an optional record field is compatible. Removing any named definition,
+adding a required record field or command parameter, adding a case to a closed
+enum, adding or removing a declared command error code, or changing any type or
+command result is breaking. The schema identity is part of the contract;
+revision numbers are opaque and are not interpreted by the comparison.
