@@ -3,9 +3,18 @@
 **Catalog source correction verified (2026-10-29):** the
 [official Keel package record](https://pkgs.racket-lang.org/package/keel)
 now resolves to `https://github.com/turlamai/keel.git#main`.
-The [Racket 9.3 official package-build transcript](https://pkg-build.racket-lang.org/server/built/test-success/keel.txt)
-records successful by-name installation and **2,361 passing tests**
-against commit `72353dbf87adca36816224438d2dac5e19427c2e`.
+A historical [successful package-build transcript](https://pkg-build.racket-lang.org/server/built/test-success/keel.txt)
+recorded 2,361 passing assertions against commit
+`72353dbf87adca36816224438d2dac5e19427c2e`. **That historical result is
+not the current official build status.** On 2026-11-03 the
+[current package-builder test transcript](https://pkg-build.racket-lang.org/server/built/test-fail/keel.txt)
+reported one failing documentation test out of 2,316 assertions: the test
+required a checkout-only `.github/workflows/catalog-release-gate.yml` file
+inside the published package. Package builds do not need to distribute GitHub
+workflow configuration. The documentation test should keep enforcing the
+workflow's existence in a Git checkout, while permitting its absence from the
+installed catalog archive. A fresh official build must be checked after this
+change is merged; the status must not be reported as green in advance.
 
 The former package-source problem has been fixed. [Issue #8](https://github.com/turlamai/keel/issues/8)
 now tracks rerunning the *previously blocked* Rivet/Glaze consumer suites.
