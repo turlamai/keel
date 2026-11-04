@@ -95,7 +95,8 @@ versions and error taxonomies.
 
 The [official Racket package catalog](https://pkgs.racket-lang.org/package/keel)
 was corrected to `https://github.com/turlamai/keel.git#main` on
-2026-10-29. The official Racket 9.3 builder reports **2,361 passing tests**.
+2026-10-29. The package page links the current official build transcript;
+treat that transcript as authoritative rather than a test count copied here.
 The [catalog release gate](docs/package-catalog-release.md) guards against
 regressions; [issue #8](https://github.com/turlamai/keel/issues/8)
 tracks the separate Rivet/Glaze downstream rerun evidence.
@@ -107,7 +108,7 @@ raco pkg install --auto --name keel --link
 raco test -p keel
 ```
 
-The package supports Racket 9.0 and newer and is MIT licensed.
+The package is tested on Racket CS 9.0 and 9.3 and is MIT licensed.
 
 Compatibility changes follow the review gates in
 [CONTRIBUTING.md](CONTRIBUTING.md). Please report suspected vulnerabilities

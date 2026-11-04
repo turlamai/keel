@@ -31,6 +31,9 @@ unsigned 32-bit values. Values use one byte tag followed by the listed body.
 Map keys are ordered by their encoded UTF-8 bytes in strictly increasing
 lexicographic order. A decoder rejects duplicates and any other order. Map
 keys are encoded as ordinary String values and count toward node/depth budgets.
+Keys are also compared by string value on the value side: an eq-based hash
+holding two distinct key objects with equal contents is not a canonical map
+and is rejected before encoding.
 
 Float64 preserves finite IEEE-754 bits, including the sign of zero. NaN and
 positive/negative infinity are not values in v1 because JSON transports cannot

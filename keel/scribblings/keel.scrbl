@@ -75,8 +75,16 @@ Rivet can map a command to an RVT1 RPC while Glaze maps it to a GLZ1 invoke.
                           [#:states states list? null])
          app-schema?]{Validates references, uniqueness, type placement, and names, then returns a canonical schema.}
 @defproc[(app-schema? [value any/c]) boolean?]{Recognizes a validated application schema.}
+@defproc[(app-schema-id [schema app-schema?]) string?]{Returns the schema identity.}
+@defproc[(app-schema-revision [schema app-schema?]) exact-nonnegative-integer?]{Returns the schema revision.}
+@defproc[(app-schema-records [schema app-schema?]) (listof schema-record?)]{Returns the records in canonical declaration order.}
+@defproc[(app-schema-enums [schema app-schema?]) (listof schema-enum?)]{Returns the enums in canonical declaration order.}
+@defproc[(app-schema-commands [schema app-schema?]) (listof schema-command?)]{Returns the commands in canonical declaration order.}
+@defproc[(app-schema-events [schema app-schema?]) (listof schema-event?)]{Returns the events in canonical declaration order.}
+@defproc[(app-schema-states [schema app-schema?]) (listof schema-state?)]{Returns the states in canonical declaration order.}
 @defproc[(schema-type? [value any/c]) boolean?]{Recognizes scalar, list, map, optional, and named-reference type descriptors.}
 @defproc[(schema-name? [value any/c]) boolean?]{Recognizes a non-empty schema identity of at most 255 UTF-8 bytes, excluding control, format, and surrogate code points. Names preserve Racket punctuation and Unicode; consumers map them to collision-checked local identifiers.}
+@defproc[(schema-type->app-value [type schema-type?]) app-value?]{Returns the normative introspection value for one type descriptor.}
 @defproc[(app-schema->app-value [schema app-schema?]) app-value?]{Returns the normative introspection value for schema contract 1.}
 @defproc[(encode-app-schema [schema app-schema?]) bytes?]{Canonically encodes the introspection value.}
 
@@ -90,6 +98,10 @@ The scalar descriptors are @racket[Null], @racket[Bool], @racket[Int64],
 
 @section{Lifecycle}
 
+@defthing[lifecycle-states (listof symbol?)]{The lifecycle vocabulary, in order: @racket['starting], @racket['ready], @racket['running], @racket['stopping], and @racket['stopped].}
+@defthing[lifecycle-initial-state symbol?]{The state every shared runtime starts in: @racket['starting].}
 @defproc[(lifecycle-state? [value any/c]) boolean?]{Recognizes @racket['starting], @racket['ready], @racket['running], @racket['stopping], and @racket['stopped].}
+@defproc[(lifecycle-terminal-state? [value any/c]) boolean?]{Recognizes the terminal lifecycle state, @racket['stopped].}
 @defproc[(lifecycle-transition? [from lifecycle-state?] [to lifecycle-state?]) boolean?]{Reports whether the transition is part of the shared lifecycle contract.}
+@defthing[request-terminal-outcomes (listof symbol?)]{The mutually exclusive request outcomes: @racket['succeeded], @racket['failed], @racket['cancelled], and @racket['timed-out].}
 @defproc[(request-terminal-outcome? [value any/c]) boolean?]{Recognizes the mutually exclusive request outcomes.}

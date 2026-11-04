@@ -6,6 +6,27 @@ separately by the compatibility rules in `docs/contract-v1.md`.
 
 ## Unreleased
 
+- Reject eq-based maps whose string keys collide by value. `app-value?` used to
+  accept a `hasheq` holding two distinct string objects with equal contents;
+  encoding emitted duplicate keys that `decode-app-value` rejects, so
+  encode/decode was not total over `app-value?`. Such maps are now rejected
+  before encoding and covered by a regression test.
+
+- Move the portable code/message shape check into the `app-error` struct guard.
+  Requiring `(submod keel/error private)` could previously mint an
+  `app-error?` value with a non-kebab-case code or a non-string message;
+  the private constructor now enforces the same invariants as the public one.
+
+- Document the remaining public exports in the Scribble manual: the seven
+  `app-schema` accessors, `schema-type->app-value`, the lifecycle constants,
+  and `request-terminal-outcomes`.
+
+- Make the documentation gate pass for an installed source package, which does
+  not contain `.github`: link the catalog workflow by URL and require the
+  workflow file only in a repository checkout. Remove stale fixed test counts
+  from the README, Chinese README, CONTRIBUTING, and AGENTS, and state the
+  tested Racket versions instead of "and newer".
+
 - Preserve CI evidence for every `main` commit instead of cancelling earlier
   builds, while continuing to cancel superseded pull request checks; release
   and downstream compatibility gates remain unchanged.

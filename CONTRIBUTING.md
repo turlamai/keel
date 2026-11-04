@@ -42,8 +42,9 @@ in Keel to reduce the number of downstream edits.
 
 ## Releasing
 
-The official package record was corrected on 2026-10-29 and its
-Racket 9.3 build/test transcript reports 2,361 successful tests.
+The official package record was corrected on 2026-10-29; the package
+page links the current Racket 9.3 build/test transcript. Treat that
+transcript as authoritative instead of a test count copied into docs.
 See [the catalog release gate](docs/package-catalog-release.md) for
 fresh by-name install checks. [Issue #8](https://github.com/turlamai/keel/issues/8)
 tracks rerunning previously blocked Rivet/Glaze consumer suites.

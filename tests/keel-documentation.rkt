@@ -70,10 +70,14 @@
     (file->string (build-path repository-root entry))
     "docs/package-catalog-release.md")
    (format "~a must link the published catalog release gate" entry)))
-(check-true
- (file-exists?
-  (build-path repository-root ".github/workflows/catalog-release-gate.yml"))
- "release verification must ship a manually triggered catalog install gate")
+;; The `.github` directory is repository metadata, not package content:
+;; `raco pkg create` does not ship it. The gate file can therefore only be
+;; required in a checkout; an installed package must still pass its tests.
+(define workflow-gate-relative ".github/workflows/catalog-release-gate.yml")
+(when (directory-exists? (build-path repository-root ".github"))
+  (check-true
+   (file-exists? (build-path repository-root workflow-gate-relative))
+   "release verification must ship a manually triggered catalog install gate"))
 (for ([guide (in-list (list agent-guide contributor-guide))])
   (check-true
    (string-contains? guide "docs/package-catalog-release.md")
