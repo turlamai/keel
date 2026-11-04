@@ -31,6 +31,9 @@ unsigned 32-bit values. Values use one byte tag followed by the listed body.
 Map keys are ordered by their encoded UTF-8 bytes in strictly increasing
 lexicographic order. A decoder rejects duplicates and any other order. Map
 keys are encoded as ordinary String values and count toward node/depth budgets.
+Keys are also compared by string value on the value side: an eq-based hash
+holding two distinct key objects with equal contents is not a canonical map
+and is rejected before encoding.
 
 Float64 preserves finite IEEE-754 bits, including the sign of zero. NaN and
 positive/negative infinity are not values in v1 because JSON transports cannot
@@ -93,3 +96,12 @@ Existing tags and golden bytes never change within v1. An additive tag still
 requires protocol negotiation because an older decoder must reject it. Any
 change to numeric representation, canonical ordering, budgets, or structured
 error shape requires a new Keel contract version and migration evidence.
+
+Schema compatibility is separate from wire versioning. `app-schema-changes`
+compares two revisions and classifies each difference as `breaking` or
+`compatible`. Adding a record, enum, command, event, or state is compatible;
+adding an optional record field is compatible. Removing any named definition,
+adding a required record field or command parameter, adding a case to a closed
+enum, adding or removing a declared command error code, or changing any type or
+command result is breaking. The schema identity is part of the contract;
+revision numbers are opaque and are not interpreted by the comparison.

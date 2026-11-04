@@ -59,7 +59,8 @@ gh workflow run family-compat.yml -R turlamai/glaze
 
 The [official Racket package catalog](https://pkgs.racket-lang.org/package/keel)
 was corrected to `https://github.com/turlamai/keel.git#main` on
-2026-10-29 and the package builder passed 2,361 Racket 9.3 tests.
+2026-10-29. The package page links the current build transcript; do not
+copy a test count into guidance that changes on every push.
 Continue enforcing the [catalog release gate](docs/package-catalog-release.md);
 issue #8 now awaits previously blocked Rivet/Glaze consumer evidence.
 A green Keel package build does not prove all downstream releases.
