@@ -6,6 +6,15 @@ separately by the compatibility rules in `docs/contract-v1.md`.
 
 ## Unreleased
 
+- Add transport-neutral schema compatibility checking: `app-schema-changes`
+  compares two schema revisions and reports each `breaking` or `compatible`
+  difference at a stable dotted path, and `schema-compatible?` answers whether
+  peers built against the old revision can keep operating against the new one.
+  Closed enums, command parameters, declared error codes, and required record
+  fields are treated conservatively; optional record fields, new records,
+  commands, events, and states are compatible additions. This gives Rivet and
+  Glaze one shared rule set instead of two protocol-local approximations.
+
 - Reject eq-based maps whose string keys collide by value. `app-value?` used to
   accept a `hasheq` holding two distinct string objects with equal contents;
   encoding emitted duplicate keys that `decode-app-value` rejects, so
