@@ -17,6 +17,17 @@
 (define-runtime-path repository-root/raw "..")
 (define repository-root (simplify-path repository-root/raw #t))
 
+;; The official package builder installs a source archive, not a Git checkout.
+;; GitHub workflow files are maintainer tooling and are not part of that archive.
+;; In a repository checkout (including GitHub Actions) they must exist; in a
+;; catalog installation, only this one checkout-only Markdown link is exempt.
+(define source-checkout?
+  (directory-exists? (build-path repository-root ".git")))
+(define catalog-release-workflow
+  (simplify-path
+   (build-path repository-root ".github" "workflows" "catalog-release-gate.yml")
+   #f))
+
 (define (markdown-file? path)
   (and (file-exists? path)
        (equal? (path-get-extension path) #".md")))
@@ -45,7 +56,10 @@
       (define resolved
         (simplify-path (build-path (path-only document) local-target) #f))
       (check-true
-       (or (file-exists? resolved) (directory-exists? resolved))
+       (or (file-exists? resolved)
+           (directory-exists? resolved)
+           (and (not source-checkout?)
+                (equal? resolved catalog-release-workflow)))
        (format "~a links to missing local target ~a"
                (find-relative-path repository-root document)
                target)))))
@@ -70,14 +84,10 @@
     (file->string (build-path repository-root entry))
     "docs/package-catalog-release.md")
    (format "~a must link the published catalog release gate" entry)))
-;; The `.github` directory is repository metadata, not package content:
-;; `raco pkg create` does not ship it. The gate file can therefore only be
-;; required in a checkout; an installed package must still pass its tests.
-(define workflow-gate-relative ".github/workflows/catalog-release-gate.yml")
-(when (directory-exists? (build-path repository-root ".github"))
+(when source-checkout?
   (check-true
-   (file-exists? (build-path repository-root workflow-gate-relative))
-   "release verification must ship a manually triggered catalog install gate"))
+   (file-exists? catalog-release-workflow)
+   "repository checkout must include the manually triggered catalog install gate"))
 (for ([guide (in-list (list agent-guide contributor-guide))])
   (check-true
    (string-contains? guide "docs/package-catalog-release.md")

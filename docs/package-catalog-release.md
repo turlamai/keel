@@ -7,6 +7,14 @@ The package page links the current build transcript for the commit it
 tested; treat that transcript, not a test count copied into this document,
 as authoritative. Counts and commits change with every push.
 
+**Known issue (2026-11-03 official builder):** the Racket 9.3 catalog
+installation compiled, but its documentation test expected the repository-only
+`.github/workflows/catalog-release-gate.yml` file inside a published package.
+The gate remains mandatory in a Git checkout; package archive tests must not
+require a workflow file that the Racket package archive omits. The latest
+[official package status](https://pkgs.racket-lang.org/package/keel) must be
+rechecked after this fix reaches `main`—local CI green alone is not enough.
+
 The former package-source problem has been fixed. [Issue #8](https://github.com/turlamai/keel/issues/8)
 now tracks rerunning the *previously blocked* Rivet/Glaze consumer suites.
 A green Keel package build does not establish all downstream compatibility.
