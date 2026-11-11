@@ -1,7 +1,7 @@
 (function () {
   var I18N = {
     en: {
-      'nav.why': 'Why', 'nav.contract': 'Contract', 'nav.lifecycle': 'Lifecycle', 'nav.start': 'Quick start',
+      'nav.why': 'Why', 'nav.contract': 'Contract', 'nav.schema': 'Schema', 'nav.lifecycle': 'Lifecycle', 'nav.start': 'Quick start',
       'hero.eyebrow': 'Contract v1 · Canonical bytes · MIT',
       'hero.title': 'One contract.\nEvery runtime.',
       'hero.lede': 'Keel is the transport-neutral application contract shared by Racket desktop runtimes: one value model, one canonical encoding, one error shape — so native and WebView apps speak the same bytes.',
@@ -41,10 +41,21 @@
       'discipline.body': 'tests/golden-v1.txt is the normative byte corpus: changing an existing line is a compatibility break. New union members need a written rationale, new cross-runtime golden vectors, decoder budget tests, and a version decision.',
       'boundary.eyebrow': 'A DELIBERATE BOUNDARY', 'boundary.title': 'A contract, not a transport.',
       'boundary.body': 'Keel owns no frame header, request identifier, streaming or backpressure, renderer, permission model, or installer. Rivet keeps RVT1 and its native hosts; Glaze keeps GLZ1 and its WebView adapters; other transports may embed this codec but negotiate their own versions and error taxonomies.',
+      'schema.eyebrow': 'DESCRIBE THE BOUNDARY, COMPARE THE CHANGE',
+      'schema.title': 'One schema language. Honest compatibility.',
+      'schema.lede': 'Records, enums, commands, events, and states describe the application boundary without selecting a transport — and any two revisions can be compared, rule by rule.',
+      'schema.p1': 'A schema is itself data: canonical bytes any runtime can read. Rivet maps a command to an RVT1 RPC, Glaze to a GLZ1 invoke; the description travels with the application, not with the frame.',
+      'schema.breaking.verdict': 'BREAKING',
+      'schema.breaking.title': 'A peer can observe the difference',
+      'schema.breaking.body': 'Removing a record, field, enum case, command, parameter, or declared error code — or changing any type — is reported as breaking, at a stable dotted path.',
+      'schema.compatible.verdict': 'COMPATIBLE',
+      'schema.compatible.title': 'Old peers keep operating',
+      'schema.compatible.body': 'Adding a record, enum, command, event, state, or an optional field is compatible. schema-compatible? answers with one boolean; every difference is reviewable.',
+      'schema.note': 'Revision numbers are not interpreted: callers decide whether a revision replaces, supersedes, or accompanies the old one.',
       'footer.tagline': 'The shared application contract of the Racket desktop family.'
     },
     zh: {
-      'nav.why': '为什么', 'nav.contract': '契约', 'nav.lifecycle': '生命周期', 'nav.start': '快速开始',
+      'nav.why': '为什么', 'nav.contract': '契约', 'nav.schema': 'Schema', 'nav.lifecycle': '生命周期', 'nav.start': '快速开始',
       'hero.eyebrow': 'Contract v1 · 规范字节 · MIT',
       'hero.title': '一份契约，\n每个运行时。',
       'hero.lede': 'Keel 是 Racket 桌面运行时共享的传输无关应用契约：一个值模型、一套规范编码、一个错误形状——原生渲染与 WebView 渲染两端，说的是同一种字节。',
@@ -84,6 +95,17 @@
       'discipline.body': 'tests/golden-v1.txt 是规范的字节语料：改动任何已有行都算兼容性破坏。新增联合成员需要书面论证、新的跨运行时 golden 向量、解码预算测试和一次版本决策。',
       'boundary.eyebrow': '有意保留的边界', 'boundary.title': '是契约，不是传输。',
       'boundary.body': 'Keel 不拥有帧头、请求标识、流式与背压、渲染器、权限模型或安装器。Rivet 保留 RVT1 和它的原生宿主；Glaze 保留 GLZ1 和它的 WebView 适配器；其他传输可以嵌入这套编解码，但版本与错误分类自行协商。',
+      'schema.eyebrow': '描述边界，如实比较',
+      'schema.title': '一套 schema 语言，诚实的兼容性。',
+      'schema.lede': '记录、枚举、命令、事件与状态只描述应用边界，不选定传输——任意两个版本都能逐条规则比较。',
+      'schema.p1': 'Schema 本身也是数据：任何运行时都能读的规范字节。Rivet 把命令映射成 RVT1 RPC，Glaze 映射成 GLZ1 invoke；描述跟着应用走，不跟着帧走。',
+      'schema.breaking.verdict': 'BREAKING',
+      'schema.breaking.title': '对端能察觉的差异',
+      'schema.breaking.body': '删除记录、字段、枚举分支、命令、参数或已声明的错误码，或改变任何类型——都会按稳定的点分路径报告为 breaking。',
+      'schema.compatible.verdict': 'COMPATIBLE',
+      'schema.compatible.title': '老对端继续工作',
+      'schema.compatible.body': '新增记录、枚举、命令、事件、状态或可选字段都是兼容的。schema-compatible? 给出一个布尔答案，每一条差异都可评审。',
+      'schema.note': '版本号本身不被解释：新版本是替换、取代还是并存，由调用方决定。',
       'footer.tagline': 'Racket 桌面家族共享的应用契约。'
     }
   };

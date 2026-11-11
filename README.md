@@ -2,11 +2,14 @@
 
 **English** · [中文](README.zh-CN.md)
 
+[![CI](https://github.com/turlamai/keel/actions/workflows/ci.yml/badge.svg)](https://github.com/turlamai/keel/actions/workflows/ci.yml) ![Racket](https://img.shields.io/badge/Racket-9.0%20%7C%209.3-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![Version](https://img.shields.io/github/v/release/turlamai/keel?label=version)](https://github.com/turlamai/keel/releases/latest)
+
 `keel` is the transport-neutral application contract shared by
 Racket desktop runtimes. It gives native-rendered and WebView-rendered stacks
 one small value model, one canonical byte encoding, one structured-error shape,
 one lifecycle vocabulary, one transport-neutral schema vocabulary, and one
-compatibility corpus.
+compatibility corpus. The contract homepage is
+[keel.jrtx.site](https://keel.jrtx.site/).
 
 The package intentionally does **not** own UI controls, transport frames,
 process embedding, HTTP, WebView messaging, or platform policy. Rivet keeps
@@ -14,17 +17,54 @@ RVT1 and its WinUI 3 / SwiftUI-AppKit / GTK4 hosts; Glaze keeps GLZ1 and its
 native WebView adapters.
 
 Permit and Commerce are deliberately outside this dependency chain. Products
-may compose Permit beside Rivet or Glaze for signed commercial rights and add
-Commerce when they need online sales orchestration. Permit does not depend on
-Keel or either framework; Commerce's headless core does not use Keel. The
-canonical five-repository graph, ownership rules, and release order live in the
-[family architecture](docs/family-architecture.md).
+may compose [Permit](https://github.com/turlamai/permit) beside Rivet or Glaze
+for signed commercial rights and add
+[Commerce](https://github.com/turlamai/commerce) when they need online sales
+orchestration. Permit does not depend on Keel or either framework; Commerce's
+headless core does not use Keel. The canonical five-repository graph,
+ownership rules, and release order live in the
+[family architecture](docs/family-architecture.md). The sibling runtimes are
+[Rivet](https://github.com/turlamai/rivet) and
+[Glaze](https://github.com/turlamai/glaze).
 
 ## Start here
 
 Use Keel for transport-neutral values, canonical bytes, schemas and structured errors shared by runtimes. Most product developers should start with Rivet or Glaze rather than assemble a second application framework around Keel.
 
 [Fit, maturity, upgrades and support](docs/USING.md) · [简体中文](docs/USING.zh-CN.md)
+
+## Quick Start
+
+The package is published on the official Racket package catalog (see
+[its install status](#published-package-install-status) for the verification
+state):
+
+```sh
+raco pkg install --auto keel
+```
+
+To install straight from this repository instead:
+
+```sh
+raco pkg install --auto --name keel https://github.com/turlamai/keel.git
+```
+
+Then values round-trip through one canonical encoding:
+
+```racket
+#lang racket/base
+
+(require keel)
+
+(define wire
+  (encode-app-value (hash "task" "review" "progress" 0.5)))
+
+(decode-app-value wire)
+```
+
+Schemas, structured errors, and the lifecycle vocabulary are introduced under
+[Contract v1](#contract-v1); the full binding reference lives in the Scribble
+manual (`raco docs keel`).
 
 ## Contract v1
 
@@ -106,6 +146,7 @@ tracks the separate Rivet/Glaze downstream rerun evidence.
 ```sh
 raco pkg install --auto --name keel --link
 raco test -p keel
+raco setup --doc-index --check-pkg-deps --pkgs keel
 ```
 
 The package is tested on Racket CS 9.0 and 9.3 and is MIT licensed.
@@ -113,3 +154,7 @@ The package is tested on Racket CS 9.0 and 9.3 and is MIT licensed.
 Compatibility changes follow the review gates in
 [CONTRIBUTING.md](CONTRIBUTING.md). Please report suspected vulnerabilities
 through the private process in [SECURITY.md](SECURITY.md).
+
+## License
+
+[MIT](LICENSE).

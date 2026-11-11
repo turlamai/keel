@@ -428,6 +428,22 @@ h1 {
 .budget-strip b { font: 760 30px/1 ui-monospace, "SFMono-Regular", Consolas, monospace; color: var(--accent-deep); letter-spacing: -.03em; }
 .budget-strip small { color: var(--muted); font-size: 12px; }
 
+.schema-lede { color: var(--muted); font-size: 17px; max-width: 760px; }
+.schema-cards {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.schema-cards article { padding: 32px 34px 36px; }
+.schema-cards article + article { border-left: 1px solid var(--line); }
+.schema-cards .verdict { color: var(--accent-deep); font: 700 11px/1 ui-monospace, "SFMono-Regular", Consolas, monospace; letter-spacing: .08em; }
+.schema-cards h3 { margin: 14px 0 10px; font-size: 18px; letter-spacing: -.02em; }
+.schema-cards p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+.schema-note { max-width: 780px; margin: 26px 0 0; color: var(--muted); font-size: 14px; }
+
 .lifecycle { display: grid; gap: 0; }
 .state-timeline { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; margin-top: 74px; }
 .state-timeline::before { content: ""; position: absolute; top: 8px; left: 9%; right: 9%; height: 1px; background: var(--line-strong); }
@@ -549,6 +565,8 @@ footer p { margin: 0; }
   .tag-row { min-width: 620px; }
   .budget-strip { grid-template-columns: 1fr; }
   .budget-strip div + div { border-left: 0; border-top: 1px solid var(--line); }
+  .schema-cards { grid-template-columns: 1fr; }
+  .schema-cards article + article { border-left: 0; border-top: 1px solid var(--line); }
   .state-timeline { grid-template-columns: repeat(2, 1fr); gap: 28px 0; }
   .state-timeline::before { display: none; }
   .state-note { text-align: left; }

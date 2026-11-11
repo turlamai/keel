@@ -2,7 +2,7 @@
 
 @(require (for-label racket/base keel))
 
-@title{Keel: Neutral Contracts for Racket Desktop Runtimes}
+@title[#:tag "keel"]{Keel: Neutral Contracts for Racket Desktop Runtimes}
 
 @defmodule[keel]
 
@@ -135,3 +135,13 @@ operating against @racket[new] under the documented wire rules.}
 @defproc[(lifecycle-transition? [from lifecycle-state?] [to lifecycle-state?]) boolean?]{Reports whether the transition is part of the shared lifecycle contract.}
 @defthing[request-terminal-outcomes (listof symbol?)]{The mutually exclusive request outcomes: @racket['succeeded], @racket['failed], @racket['cancelled], and @racket['timed-out].}
 @defproc[(request-terminal-outcome? [value any/c]) boolean?]{Recognizes the mutually exclusive request outcomes.}
+
+@section[#:tag "keel-further-reading"]{Further reading}
+
+The normative wire contract, including the tag table and the compatibility
+discipline, is
+@hyperlink["https://github.com/turlamai/keel/blob/main/docs/contract-v1.md"]{docs/contract-v1.md}
+in the repository. @hyperlink["https://github.com/turlamai/keel"]{github.com/turlamai/keel}
+hosts the source, the golden corpus, and the issue tracker;
+@hyperlink["https://keel.jrtx.site/"]{keel.jrtx.site} is the contract homepage.
+Rivet and Glaze embed this contract behind their own transport envelopes.

@@ -40,3 +40,10 @@ jobs:
         # Documentation is platform independent; retain Racket 9.0 + 9.3 checks.
         if: matrix.os == 'ubuntu-latest'
         run: raco setup --doc-index --check-pkg-deps --pkgs keel
+      - name: Assert the manual renders to a real artifact
+        # setup exiting zero is necessary but not sufficient; pin the HTML output.
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          raco scribble ++xref-in setup/xref load-collections-xref \
+            --htmls --dest "$RUNNER_TEMP/keel-docs" keel/scribblings/keel.scrbl
+          test -s "$RUNNER_TEMP/keel-docs/keel/index.html"
