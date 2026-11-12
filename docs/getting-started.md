@@ -28,4 +28,4 @@ Expected output: `Keel round trip passed`. This checks one local public-API roun
 
 Keel supplies no RPC envelope, network endpoint or UI. A consuming framework maps schemas to its own transport; preserve normative rejection rules, canonical map ordering and budgets.
 
-Continue with the [v1 contract](contract-v1.md), [adoption/support](USING.md) and [CONTRIBUTING](../CONTRIBUTING.md). Independent implementations execute the normative `tests/golden-v1.txt` corpus.
+Continue with the [v1 contract](contract-v1.md), [adoption/support](USING.md) and [CONTRIBUTING](../CONTRIBUTING.md). Independent implementations execute the normative `keel-test/golden-v1.txt` corpus.

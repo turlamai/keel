@@ -125,7 +125,7 @@ consumer code generators own collision-checked source-language identifiers.
 
 ## Compatibility discipline
 
-`tests/golden-v1.txt` is the normative byte corpus. Changing an existing line
+`keel-test/golden-v1.txt` is the normative byte corpus. Changing an existing line
 is a compatibility break. New union members require a written rationale, new
 cross-runtime golden vectors, decoder budget tests, and a version decision.
 Transport protocols may embed this codec, but they must negotiate their own

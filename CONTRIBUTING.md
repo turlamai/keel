@@ -17,12 +17,13 @@ The `app-schema->app-value` shape is a compatibility surface too. Renaming a
 key, changing declaration-order semantics, or reinterpreting an existing type
 descriptor requires the same written version decision as changing value bytes.
 
-Test module names are a packaging surface: the top-level `tests/` collection is
-shared by every installed package, so two packages claiming the same module
-path cannot coexist in one installation (the `tests/documentation` collision
-with rivet v0.11.0 broke every downstream install). Every Keel test module
-therefore carries the `keel-` prefix; `tests/keel-collection-names.rkt`
-enforces this.
+Tests live in the private `keel-test/` collection. Never put test modules in a
+top-level `tests/` directory: that collection name is shared by every installed
+package, and two packages claiming the same module path cannot coexist (the
+`tests/documentation` collision with rivet v0.11.0 broke every downstream
+install — see [REPOSITORY-LAYOUT-STANDARD](https://github.com/turlamai/turlamai.github.io/blob/master/docs/REPOSITORY-LAYOUT-STANDARD.md)).
+Keel keeps the `keel-` module prefix as defense in depth;
+`keel-test/keel-collection-names.rkt` enforces it.
 
 Pull requests should be narrow, include an executable regression test, and
 avoid transport-, renderer-, or product-specific policy. Generated files and

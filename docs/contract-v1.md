@@ -1,7 +1,7 @@
 # Keel Contract v1
 
 This document is normative for the version-1 value, schema, and lifecycle contracts.
-The Racket implementation and `tests/golden-v1.txt` are executable evidence.
+The Racket implementation and `keel-test/golden-v1.txt` are executable evidence.
 
 ## Scope
 

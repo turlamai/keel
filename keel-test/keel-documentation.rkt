@@ -1,11 +1,9 @@
 #lang racket/base
 
 ;; Markdown dead-link check over the repository. Named keel-documentation
-;; because `tests/` is a collection shared by every family package: rivet
-;; already ships `tests/documentation`, and two packages claiming the same
-;; module path cannot coexist in one installation (raco pkg install conflict).
-;; The keel- prefix is mandatory for every module in this directory;
-;; tests/keel-collection-names.rkt enforces the rule.
+;; Modules live in the private `keel-test/` collection. The `keel-` prefix
+;; remains mandatory as defense in depth against the shared top-level
+;; `tests` collection hazard; keel-collection-names.rkt enforces the rule.
 
 (require rackunit
          racket/file

@@ -9,3 +9,8 @@
 
 (define deps '(["base" #:version "9.0"]))
 (define build-deps '("racket-doc" "rackunit-lib" "scribble-lib"))
+
+;; `site/` is the product website, not packaged library source (same
+;; discipline as permit's source-omit-files).
+(define source-omit-files
+  '("site"))

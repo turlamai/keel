@@ -25,7 +25,7 @@ budgets) without an explicit contract-version decision.
 ## Source map
 
 - `keel/`: the library (values, encoding, errors, schemas)
-- `tests/`: behavior and rejection tests, golden corpus
+- `keel-test/`: behavior and rejection tests, golden corpus (private `keel-test` collection, not the shared `tests` one)
 - `docs/`: normative contract text
 - `site/`: keel.jrtx.site contract homepage
 

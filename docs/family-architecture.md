@@ -124,9 +124,10 @@ is fixed forward or the upstream release is corrected.
 
 The top-level `tests/` collection is shared by every package in one Racket
 installation: two packages claiming the same module path there cannot
-coinstall. Each family package namespaces its test modules with its own
-prefix (`keel-` here, enforced by Keel's collection-name guard) so any set of
-family packages always installs together.
+coinstall. Family packages therefore keep tests in their own private
+`<name>-test/` collection (Keel: `keel-test/`) and keep the per-package module
+prefix (`keel-`, enforced by Keel's collection-name guard) as defense in
+depth, so any set of family packages always installs together.
 
 The active implementation queue remains local to each repository:
 
