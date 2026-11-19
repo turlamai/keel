@@ -1,7 +1,5 @@
 # keel
 
-**Support:** [Issues & feedback](https://github.com/turlamai/keel/issues) · [Development policy](https://github.com/turlamai/turlamai.github.io/blob/master/PORTFOLIO.md)
-
 **English** · [中文](README.zh-CN.md)
 
 [![CI](https://github.com/turlamai/keel/actions/workflows/ci.yml/badge.svg)](https://github.com/turlamai/keel/actions/workflows/ci.yml) ![Racket](https://img.shields.io/badge/Racket-9.0%20%7C%209.3-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![Version](https://img.shields.io/github/v/release/turlamai/keel?label=version)](https://github.com/turlamai/keel/releases/latest)
