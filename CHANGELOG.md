@@ -10,6 +10,10 @@ contract version is governed separately by the compatibility rules in
 
 ### Added
 
+- Add `keel/semver`, a strict SemVer 2.0 precedence API with regression
+  tests for numeric versus alphanumeric prerelease identifiers. Channel
+  selection and update manifest policy remain in the consumers. (#17)
+
 - Add transport-neutral schema compatibility checking: `app-schema-changes`
   compares two schema revisions and reports each `breaking` or `compatible`
   difference at a stable dotted path, and `schema-compatible?` answers whether
