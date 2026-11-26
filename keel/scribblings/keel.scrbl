@@ -1,6 +1,6 @@
 #lang scribble/manual
 
-@(require (for-label racket/base keel))
+@(require (for-label racket/base keel keel/semver))
 
 @title[#:tag "keel"]{Keel: Neutral Contracts for Racket Desktop Runtimes}
 
@@ -145,3 +145,20 @@ in the repository. @hyperlink["https://github.com/turlamai/keel"]{github.com/tur
 hosts the source, the golden corpus, and the issue tracker;
 @hyperlink["https://keel.jrtx.site/"]{keel.jrtx.site} is the contract homepage.
 Rivet and Glaze embed this contract behind their own transport envelopes.
+
+@section{Semantic versions}
+
+@defmodule[keel/semver]
+
+Strict SemVer 2.0 syntax and precedence. Build metadata is validated but
+ignored for ordering. Numeric prerelease identifiers contain only ASCII
+digits; all other identifiers compare lexically. Update channel policy
+and signed manifest formats remain outside this module.
+
+@defproc[(semver? [value any/c]) boolean?]{Recognizes a valid SemVer 2.0 string.}
+@defproc[(semver-compare [left string?] [right string?]) (or/c -1 0 1)]{Returns relative precedence; malformed versions raise a contract exception.}
+@defproc[(semver<? [left string?] [right string?]) boolean?]{Tests lower precedence.}
+@defproc[(semver<=? [left string?] [right string?]) boolean?]{Tests lower or equal precedence.}
+@defproc[(semver=? [left string?] [right string?]) boolean?]{Tests equal precedence, ignoring build metadata.}
+@defproc[(semver>=? [left string?] [right string?]) boolean?]{Tests higher or equal precedence.}
+@defproc[(semver>? [left string?] [right string?]) boolean?]{Tests higher precedence.}
