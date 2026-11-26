@@ -10,6 +10,10 @@ contract version is governed separately by the compatibility rules in
 
 ### Added
 
+- Add opt-in `keel/update-manifest` guarded normalized artifact and manifest
+  records with immutable string snapshots, component-aware identity and
+  optional artifact signature metadata. No signed wire-format changes.
+
 - Add opt-in `keel/update-contract` predicates for strict version ranges,
   artifact digest and size, and component-aware identity uniqueness. Existing
   signed manifest formats and consumer policy remain unchanged.
