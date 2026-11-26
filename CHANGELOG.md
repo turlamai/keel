@@ -10,6 +10,10 @@ contract version is governed separately by the compatibility rules in
 
 ### Added
 
+- Add opt-in `keel/update-contract` predicates for strict version ranges,
+  artifact digest and size, and component-aware identity uniqueness. Existing
+  signed manifest formats and consumer policy remain unchanged.
+
 - Add `keel/semver`, a strict SemVer 2.0 precedence API with regression
   tests for numeric versus alphanumeric prerelease identifiers. Channel
   selection and update manifest policy remain in the consumers. (#17)
