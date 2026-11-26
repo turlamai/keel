@@ -1,6 +1,6 @@
 #lang scribble/manual
 
-@(require (for-label racket/base keel keel/semver))
+@(require (for-label racket/base keel keel/semver keel/update-contract))
 
 @title[#:tag "keel"]{Keel: Neutral Contracts for Racket Desktop Runtimes}
 
@@ -162,3 +162,14 @@ and signed manifest formats remain outside this module.
 @defproc[(semver=? [left string?] [right string?]) boolean?]{Tests equal precedence, ignoring build metadata.}
 @defproc[(semver>=? [left string?] [right string?]) boolean?]{Tests higher or equal precedence.}
 @defproc[(semver>? [left string?] [right string?]) boolean?]{Tests higher precedence.}
+
+@section{Shared update validation}
+
+@defmodule[keel/update-contract]
+
+Pure predicates for future common update manifests: @racket[update-version-range?],
+@racket[update-artifact-sha256?], @racket[update-artifact-size?],
+@racket[update-artifact-identity?], and @racket[unique-update-artifact-identities?].
+See @hyperlink["https://github.com/turlamai/keel/blob/main/docs/update-contract.md"]{the validation contract}
+for argument shapes and legacy compatibility constraints. These predicates do
+not authenticate updates or change either consumer's existing manifest format.
