@@ -1,6 +1,6 @@
 #lang scribble/manual
 
-@(require (for-label racket/base keel keel/semver keel/update-contract keel/update-manifest))
+@(require (for-label racket/base keel keel/semver keel/update-contract keel/update-manifest keel/update-manifest-codec))
 
 @title[#:tag "keel"]{Keel: Neutral Contracts for Racket Desktop Runtimes}
 
@@ -181,3 +181,10 @@ not authenticate updates or change either consumer's existing manifest format.
 @defstruct*[update-artifact ([platform string?] [architecture string?] [url string?] [sha256 string?] [size exact-positive-integer?] [installer string?] [arguments (listof string?)] [component (or/c #f string?)] [signature (or/c #f string?)])]{Guarded normalized artifact; signature is opaque metadata, not verification evidence.}
 @defstruct*[update-manifest ([application-id string?] [version string?] [build exact-positive-integer?] [channel string?] [published-at string?] [minimum-version string?] [previous-version (or/c #f string?)] [rollback-allowed? boolean?] [rollout exact-integer?] [artifacts (listof update-artifact?)])]{Guarded normalized manifest; no wire encoding or trust decision.}
 @defproc[(update-artifact-identity [artifact update-artifact?]) list?]{Returns the four-part component-aware identity.}
+
+@section{Canonical update payload}
+
+@defmodule[keel/update-manifest-codec]
+
+@defproc[(encode-update-manifest [manifest update-manifest?]) bytes?]{Encodes the normalized manifest using the Keel value codec and the versioned payload schema.}
+@defproc[(decode-update-manifest [payload bytes?]) update-manifest?]{Rejects unknown formats, missing or extra fields and noncanonical bytes. Decoding is not authentication.}
