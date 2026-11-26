@@ -10,6 +10,10 @@ contract version is governed separately by the compatibility rules in
 
 ### Added
 
+- Add opt-in `keel/update-manifest-codec` for an explicitly versioned canonical
+  binary manifest payload, with closed-field validation and rejection of
+  noncanonical representations. Legacy JSON feeds remain unchanged.
+
 - Add opt-in `keel/update-manifest` guarded normalized artifact and manifest
   records with immutable string snapshots, component-aware identity and
   optional artifact signature metadata. No signed wire-format changes.
