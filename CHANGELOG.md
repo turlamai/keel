@@ -8,6 +8,8 @@ contract version is governed separately by the compatibility rules in
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-27
+
 ### Added
 
 - Add opt-in `keel/update-signature` with domain-separated signing inputs,
