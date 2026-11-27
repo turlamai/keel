@@ -1,0 +1,90 @@
+name: Verified release
+
+# Publish only an explicitly prepared changelog version on a green main SHA.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: keel-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify exact main and prepared release version
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERIFIED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$VERIFIED_SHA"
+          if [ "$(gh api "repos/$GITHUB_REPOSITORY/branches/main" --jq .commit.sha)" != "$VERIFIED_SHA" ]; then
+            echo "Stale CI run; no release"
+            exit 0
+          fi
+          python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          text = Path("CHANGELOG.md").read_text()
+          match = re.search(r"^## \[([0-9]+\.[0-9]+\.[0-9]+)\] - [0-9]{4}-[0-9]{2}-[0-9]{2}$", text, re.M)
+          if not match:
+              raise SystemExit("No prepared release heading")
+          version = match.group(1)
+          package = re.search(r'\(define version "([0-9.]+)"\)', Path("info.rkt").read_text())
+          if not package or tuple(map(int, (package.group(1) + ".0.0").split(".")[:3])) != tuple(map(int, version.split("."))):
+              raise SystemExit("Package version and changelog disagree")
+          end = re.search(r"^## ", text[match.end():], re.M)
+          notes = text[match.end():match.end()+end.start()] if end else text[match.end():]
+          if not notes.strip():
+              raise SystemExit("Empty release notes")
+          Path(os.environ["RUNNER_TEMP"], "release-notes.md").write_text(notes.strip()+"\n")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              print("tag=v"+version, file=out)
+          PY
+      - name: Publish prepared version if newer than latest release
+        if: steps.version.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERIFIED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          # Do not publish a stale main or move an existing tag.
+          test "$(gh api "repos/$GITHUB_REPOSITORY/branches/main" --jq .commit.sha)" = "$VERIFIED_SHA"
+          latest=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
+          if [ "$latest" = "$TAG" ]; then
+            echo "Already published"
+            exit 0
+          fi
+          python3 - "$latest" "$TAG" <<'PY'
+          import re, sys
+          def parts(s):
+              if not re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", s):
+                  raise SystemExit("Unexpected release tag")
+              return tuple(map(int, s[1:].split(".")))
+          if parts(sys.argv[2]) <= parts(sys.argv[1]):
+              raise SystemExit("Refusing non-increasing release version")
+          PY
+          if git show-ref --verify --quiet "refs/tags/$TAG"; then
+            test "$(git rev-list -n 1 "$TAG")" = "$VERIFIED_SHA"
+            gh release create "$TAG" --verify-tag --title "$TAG" --notes-file "$RUNNER_TEMP/release-notes.md"
+          else
+            gh release create "$TAG" --target "$VERIFIED_SHA" --title "$TAG" --notes-file "$RUNNER_TEMP/release-notes.md"
+          fi
