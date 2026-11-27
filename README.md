@@ -123,6 +123,15 @@ the schema does not own either envelope. Schema names preserve ordinary Racket
 conventions such as `ready?`, `save!`, and `string->bytes`, plus Unicode;
 consumer code generators own collision-checked source-language identifiers.
 
+## Optional update contracts
+
+Keel 0.4 adds `keel/semver`, `keel/update-contract`, `keel/update-manifest`,
+`keel/update-manifest-codec`, and `keel/update-signature` as opt-in modules.
+See [the update contract](docs/update-contract.md) for their API and trust
+boundary. Existing JSON update feeds remain unchanged; a binary envelope
+must not be deployed until the consumer explicitly negotiates that format,
+verifies its signature using trusted keys, and validates its installation policy.
+
 ## Compatibility discipline
 
 `keel-test/golden-v1.txt` is the normative byte corpus. Changing an existing line
