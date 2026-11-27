@@ -48,3 +48,16 @@ jobs:
           raco scribble ++xref-in setup/xref load-collections-xref \
             --htmls --dest "$RUNNER_TEMP/keel-docs" keel/scribblings/keel.scrbl
           test -s "$RUNNER_TEMP/keel-docs/keel/index.html"
+
+  update-signature-fixture:
+    name: Independent Ed25519 fixture
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Install independent verifier
+        run: |
+          python3 -m venv "$RUNNER_TEMP/keel-fixture-venv"
+          "$RUNNER_TEMP/keel-fixture-venv/bin/python" -m pip install cryptography==46.0.5
+      - name: Verify exact fixture bytes and Ed25519 signature
+        run: |
+          "$RUNNER_TEMP/keel-fixture-venv/bin/python" keel-test/check-update-signature.py
