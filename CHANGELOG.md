@@ -10,6 +10,10 @@ contract version is governed separately by the compatibility rules in
 
 ### Added
 
+- Add opt-in `keel/update-signature` with domain-separated signing inputs,
+  closed Ed25519 envelope encoding, immutable byte snapshots and an external
+  verifier callback that must accept the exact signed bytes before parsing.
+
 - Add opt-in `keel/update-manifest-codec` for an explicitly versioned canonical
   binary manifest payload, with closed-field validation and rejection of
   noncanonical representations. Legacy JSON feeds remain unchanged.
