@@ -1,9 +1,12 @@
 name: Published package catalog release gate
 
-# Deliberately manual: the official Racket package catalog is external,
-# maintainer-controlled state. Do not hide its failures in PR unit CI.
+# External catalog verification is separate from PR unit CI.
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 8 * * 1'
 
 permissions:
   contents: read
@@ -39,6 +42,7 @@ jobs:
           set -euo pipefail
           raco pkg install --auto --no-docs keel
           raco pkg show --all --long keel
+          racket -e '(require keel/semver keel/update-contract keel/update-manifest keel/update-manifest-codec keel/update-signature)'
           raco test -p keel
       - name: Release evidence summary
         shell: bash

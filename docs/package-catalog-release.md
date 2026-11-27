@@ -36,8 +36,10 @@ A green Keel package build does not establish all downstream compatibility.
    must edit the **existing** `keel` source record; GitHub redirects and
    repository README edits do not update official catalog metadata.
 2. Run [Published package catalog release gate](https://github.com/turlamai/keel/blob/main/.github/workflows/catalog-release-gate.yml)
-   manually after it reaches the default branch. This checks the official
-   source and installs/tests `keel` by name on a clean Racket 9.3 runner.
+   automatically on main pushes and weekly, or manually on demand. This checks
+   the official source, installs/tests `keel` by name on a clean Racket 9.3 runner,
+   and imports all five public update modules. Catalog propagation may lag main;
+   record the actual installed checksum and rerun if it differs from the candidate.
    The workflow is repository metadata: `raco pkg create` does not ship
    `.github`, so package-installed documentation tests must not require it.
 3. Rerun `turlamai/rivet` and `turlamai/glaze` `family-compat.yml` and
@@ -56,6 +58,6 @@ A green Keel package build does not establish all downstream compatibility.
   package gate passed, downstream gate unverified**; not an all-green release.
 - Local linked-package tests alone are not official catalog evidence.
 
-The manual gate never edits official metadata or dispatches downstream CI.
+The gate never edits official metadata or dispatches downstream CI.
 See [Racket package commands](https://docs.racket-lang.org/pkg/cmdline.html)
 for `raco pkg catalog-show`.
