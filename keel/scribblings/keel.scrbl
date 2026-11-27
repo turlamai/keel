@@ -1,6 +1,6 @@
 #lang scribble/manual
 
-@(require (for-label racket/base keel keel/semver keel/update-contract keel/update-manifest keel/update-manifest-codec))
+@(require (for-label racket/base keel keel/semver keel/update-contract keel/update-manifest keel/update-manifest-codec keel/update-signature))
 
 @title[#:tag "keel"]{Keel: Neutral Contracts for Racket Desktop Runtimes}
 
@@ -188,3 +188,13 @@ not authenticate updates or change either consumer's existing manifest format.
 
 @defproc[(encode-update-manifest [manifest update-manifest?]) bytes?]{Encodes the normalized manifest using the Keel value codec and the versioned payload schema.}
 @defproc[(decode-update-manifest [payload bytes?]) update-manifest?]{Rejects unknown formats, missing or extra fields and noncanonical bytes. Decoding is not authentication.}
+
+@section{Update signature envelope}
+
+@defmodule[keel/update-signature]
+
+@defstruct*[update-signature-envelope ([key-id string?] [payload bytes?] [signature bytes?])]{An unverified envelope with immutable snapshots.}
+@defproc[(update-signature-input [key-id string?] [payload bytes?]) bytes?]{Produces domain-separated signing bytes.}
+@defproc[(encode-update-signature-envelope [envelope update-signature-envelope?]) bytes?]{Encodes the closed envelope.}
+@defproc[(decode-update-signature-envelope [raw bytes?]) update-signature-envelope?]{Decodes an unverified envelope.}
+@defproc[(verify-update-signature-envelope [envelope update-signature-envelope?] [verifier procedure?]) update-manifest?]{Calls the trusted external verifier with key ID, signing input and signature; only exact true permits payload decoding. Consumer trust and installation policy remain separate.}
