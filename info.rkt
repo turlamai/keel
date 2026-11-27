@@ -2,7 +2,7 @@
 
 (define name "keel")
 (define collection 'multi)
-(define version "0.3.1")
+(define version "0.4")
 (define pkg-desc "Transport-neutral application contracts for Racket desktop runtimes")
 (define pkg-authors '(turlamai))
 (define license 'MIT)
