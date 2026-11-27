@@ -96,6 +96,13 @@ Schema 描述应用边界，而不规定其传输方式：
 
 Rivet 可以把一条命令映射为 RVT1 RPC，而 Glaze 将其映射为 GLZ1 invoke；schema 不拥有其中任何一种信封。Schema 名称保留普通 Racket 约定，如 `ready?`、`save!` 和 `string->bytes`，并支持 Unicode；经冲突检查的源语言标识符由消费端代码生成器负责。
 
+## 可选更新契约
+
+Keel 0.4 新增可选模块 `keel/semver`、`keel/update-contract`、
+`keel/update-manifest`、`keel/update-manifest-codec` 和 `keel/update-signature`。
+接口和信任边界见[更新契约](docs/update-contract.md)。已有 JSON 更新源保持不变；
+使用二进制封装前，消费方必须显式协商格式、使用可信密钥验签并校验安装策略。
+
 ## 兼容性纪律
 
 `keel-test/golden-v1.txt` 是规范性字节语料库。修改既有任何一行都构成兼容性破坏。新增联合成员需要书面理由、新的跨运行时 golden 向量、解码器预算测试，以及一次版本决策。传输协议可以嵌入此编解码器，但必须自行协商各自的版本与错误分类法。
